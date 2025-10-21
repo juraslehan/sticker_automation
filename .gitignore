@@ -1,0 +1,31 @@
+@"
+# Virtual environment
+.venv/
+
+# Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment & system files
+.env
+*.env
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# Build & distribution folders
+build/
+dist/
+*.egg-info/
+
+# Generated outputs
+*.docx
+*.pdf
+
+# Logs
+*.log
+"@ | Out-File -Encoding utf8 .gitignore
