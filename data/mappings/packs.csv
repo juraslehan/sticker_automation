@@ -1,0 +1,22 @@
+# family,color,sku
+family,color,sku
+CF400,black,CF400A
+CF400,cyan,CF401A
+CF400,magenta,CF402A
+CF400,yellow,CF403A
+CF410,black,CF410A
+CF410,cyan,CF411A
+CF410,magenta,CF412A
+CF410,yellow,CF413A
+W2000,black,W2000A
+W2000,cyan,W2001A
+W2000,magenta,W2002A
+W2000,yellow,W2003A
+W2200,black,W2200A
+W2200,cyan,W2201A
+W2200,magenta,W2202A
+W2200,yellow,W2203A
+CN05,black,CN053AE
+CN05,cyan,CN054AE
+CN05,magenta,CN055AE
+CN05,yellow,CN056AE

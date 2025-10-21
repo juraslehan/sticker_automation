@@ -1,0 +1,54 @@
+# Zebra / continuous label layout (stack labels vertically in Word/PDF)
+
+page:
+  # Keep A4 page so Word/PDF behave nicely; we simply stack labels top→down.
+  width_mm: 210
+  height_mm: 297
+  margin_mm: { top: 10, right: 10, bottom: 10, left: 10 }
+
+label:
+  # Physical label size on the Zebra roll (adjust to your real sticker size)
+  # For example: 70mm wide × 25mm tall common for address-style labels.
+  width_mm: 70
+  height_mm: 25
+
+  # Inner padding so text doesn’t touch edges
+  padding_mm: { top: 2, right: 2, bottom: 2, left: 2 }
+
+  # Vertical gap between labels when stacking (Word paragraphs / PDF blocks)
+  gap_mm: 2
+
+  # Optional visual border for Word/PDF debugging (false for production)
+  show_border: false
+
+text:
+  # Two-line label by default (e.g., "TSR 341" on line 1, "CF259A" on line 2)
+  font_name: Arial
+  line1_size_pt: 11   # location / room (slightly larger)
+  line2_size_pt: 10   # SKU / toner code
+  line_spacing: 1.0   # 1.0 = single spacing
+
+behavior:
+  # start_pos is irrelevant in flow mode (no fixed grid)
+  mode: flow          # <- key change vs grid mode
+  per_label_qty: duplicate   # duplicate | annotate (xN) — wired next step
+  truncate_long_text: true   # ensure long names don’t overflow height
+  ellipsis: "…"               # used if truncation happens
+
+  # Optional date/SKU display toggles if needed later
+  show_date: false
+  show_sku: true
+  show_room: true
+
+word:
+  # How each label is created in Word:
+  # - "textbox": a fixed-size text box per label (recommended for Zebra)
+  # - "paragraph": simple paragraphs with spacing (less precise)
+  block_type: textbox
+  # Horizontal alignment of the label block on the page (left/center/right)
+  align: left
+
+pdf:
+  # Same flow rendering in PDF: draw each block at the next Y position.
+  # When reaching bottom margin, start a new page.
+  align: left
