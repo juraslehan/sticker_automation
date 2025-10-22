@@ -1,72 +1,46 @@
-# Zebra / continuous label layout (stack labels vertically in Word/PDF)
+# One-sticker-per-page (Zebra) — each page IS a sticker
 
 page:
-  # Keep A4 page so Word/PDF behave nicely; we simply stack labels top→down.
-  width_mm: 210
-  height_mm: 297
-  margin_mm: { top: 10, right: 10, bottom: 10, left: 10 }
+  # Sticker page size (from your Word screenshots)
+  width_mm: 55.1
+  height_mm: 30.2
+  margin_mm: { top: 2, right: 2, bottom: 2, left: 2 }
 
 label:
-  # Physical label size on the Zebra roll (adjust to your real sticker size)
-  # For example: 70mm wide × 25mm tall common for address-style labels.
-  width_mm: 70
-  height_mm: 25
-
-  # Inner padding so text doesn’t touch edges
-  padding_mm: { top: 2, right: 2, bottom: 2, left: 2 }
-
-  # Vertical gap between labels when stacking (Word paragraphs / PDF blocks)
-  gap_mm: 2
-
-  # Optional visual border for Word/PDF debugging (false for production)
-  show_border: false
+  # Same as page; content will fit inside margins
+  width_mm: 55.1
+  height_mm: 30.2
+  padding_mm: { top: 1.5, right: 2, bottom: 1.5, left: 2 }
+  show_border: true   # helpful while calibrating; set false for production
 
 text:
   font_name: Arial
   line_spacing: 1.0
-  align: center   # center everything
-
-  # per-line sizes
-  line1_size_pt: 12   # LOCATION
-  line2_size_pt: 10   # DATE
-  line3_size_pt: 11   # SOBA <room>
-  line4_size_pt: 16   # SKU (biggest)
+  align: center
+  line1_size_pt: 10   # LOCATION
+  line2_size_pt: 9    # DATE
+  line3_size_pt: 10   # SOBA <room>
+  line4_size_pt: 14   # SKU (biggest)
 
 lines:
-  - field: line1      # LOCATION
+  - field: line1  # LOCATION
     show: true
     bold: false
-  - field: line2      # DATE (will be today in real run)
+  - field: line2  # DATE (today)
     show: true
     bold: false
-  - field: line3      # SOBA <room>
+  - field: line3  # SOBA <room>
     show: true
     bold: false
-  - field: line4      # SKU
+  - field: line4  # SKU
     show: true
     bold: true
 
 behavior:
-  # start_pos is irrelevant in flow mode (no fixed grid)
-  mode: flow          # <- key change vs grid mode
-  per_label_qty: duplicate   # duplicate | annotate (xN) — wired next step
-  truncate_long_text: true   # ensure long names don’t overflow height
-  ellipsis: "…"               # used if truncation happens
-
-  # Optional date/SKU display toggles if needed later
-  show_date: false
-  show_sku: true
-  show_room: true
+  mode: page_per_label  # 1 tiny page per sticker
 
 word:
-  # How each label is created in Word:
-  # - "textbox": a fixed-size text box per label (recommended for Zebra)
-  # - "paragraph": simple paragraphs with spacing (less precise)
-  block_type: textbox
-  # Horizontal alignment of the label block on the page (left/center/right)
-  align: left
+  align: center  # center the table on the page
 
 pdf:
-  # Same flow rendering in PDF: draw each block at the next Y position.
-  # When reaching bottom margin, start a new page.
-  align: left
+  align: center  # same centering in PDF
