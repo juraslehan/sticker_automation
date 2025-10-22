@@ -4,7 +4,7 @@ from datetime import datetime
 from .mappings import Normalizer
 
 def today_hr() -> str:
-    # Example: "22.10.2025."
+    # "22.10.2025."
     return datetime.now().strftime("%d.%m.%Y.")
 
 def make_line3(room: Optional[str]) -> str:
@@ -13,18 +13,17 @@ def make_line3(room: Optional[str]) -> str:
 
 def rows_to_labels(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     """
-    Convert parsed order rows into 4-line label dicts for the renderers.
-    Input row schema (flexible, typical fields):
+    Convert parsed rows into 4-line label dicts.
+    Input row example:
       {
-        "location": "Avenija Dubrovnik 10",
-        "product": "CF400A" or "komplet CF400" or "crna-CF226A",
-        "qty": 2,
-        "room": "341"        # optional
-        "komplet_family": "CF400"  # optional explicit pack family
+        "location": "Područni ured Trešnjevka",
+        "product": "komplet-CF400" | "black-CF259A" | "CF226A" | ...
+        "qty": 1,
+        "room": "215",
+        "printer": "HP Color LaserJet Pro M479fdn",
+        "komplet_family": "CF400"  # optional if product said it explicitly
       }
-
-    Output: list of dicts with keys: line1..line4 (each element = one sticker)
-    Quantity duplicates are expanded (i.e., N pages for qty=N).
+    Output: list of {"line1","line2","line3","line4"} (duplicated by qty).
     """
     n = Normalizer()
     out: List[Dict[str, str]] = []
@@ -35,38 +34,36 @@ def rows_to_labels(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
         prod_raw = (row.get("product") or "").strip()
         qty = int(row.get("qty") or 1)
         room = row.get("room")
+        printer = (row.get("printer") or "").strip()
 
-        # 1) normalize location to short label
+        # normalize location to short label (or keep uppercase)
         loc_short = n.normalize_location(loc_raw) or loc_raw.upper()
 
-        # 2) decide SKUs
+        # Decide SKUs
         skus: List[str] = []
 
-        # (a) explicit komplet family provided
+        # (a) explicit komplet-family provided by parser
         family = (row.get("komplet_family") or "").strip().upper()
         if family:
-            expanded = n.expand_pack(family)
-            if expanded:
-                skus.extend(expanded)
+            skus.extend(n.expand_pack(family))
 
-        # (b) infer komplet from product text (e.g., "komplet CF400")
+        # (b) detect 'komplet' in product text; try to read/guess family
         if not skus and "KOMPLET" in prod_raw.upper():
-            # try to find a family token right after "komplet"
             import re
-            m = re.search(r"KOMPLET\s*([A-Z]{1,3}\d{3,4})", prod_raw.upper())
+            m = re.search(r"KOMPLET[\s\-]*([A-Z]{1,3}\d{3,4})", prod_raw.upper())
             fam = m.group(1) if m else ""
+            if not fam:
+                fam = n.family_from_printer(printer) or ""
             if fam:
-                expanded = n.expand_pack(fam)
-                if expanded:
-                    skus.extend(expanded)
+                skus.extend(n.expand_pack(fam))
 
-        # (c) if still empty, treat as single-product and normalize to a canonical SKU
+        # (c) otherwise treat as single-product and normalize to a canonical SKU
         if not skus:
             canon = n.normalize_product(prod_raw)
             if canon:
                 skus.append(canon)
 
-        # 3) build labels (duplicate by qty)
+        # build final labels, duplicate by qty
         for sku in skus or [""]:
             for _ in range(max(1, qty)):
                 out.append({
@@ -75,5 +72,4 @@ def rows_to_labels(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
                     "line3": make_line3(room),
                     "line4": sku,
                 })
-
     return out
