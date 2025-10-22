@@ -22,11 +22,29 @@ label:
   show_border: false
 
 text:
-  # Two-line label by default (e.g., "TSR 341" on line 1, "CF259A" on line 2)
   font_name: Arial
-  line1_size_pt: 11   # location / room (slightly larger)
-  line2_size_pt: 10   # SKU / toner code
-  line_spacing: 1.0   # 1.0 = single spacing
+  line_spacing: 1.0
+  align: center   # center everything
+
+  # per-line sizes
+  line1_size_pt: 12   # LOCATION
+  line2_size_pt: 10   # DATE
+  line3_size_pt: 11   # SOBA <room>
+  line4_size_pt: 16   # SKU (biggest)
+
+lines:
+  - field: line1      # LOCATION
+    show: true
+    bold: false
+  - field: line2      # DATE (will be today in real run)
+    show: true
+    bold: false
+  - field: line3      # SOBA <room>
+    show: true
+    bold: false
+  - field: line4      # SKU
+    show: true
+    bold: true
 
 behavior:
   # start_pos is irrelevant in flow mode (no fixed grid)
