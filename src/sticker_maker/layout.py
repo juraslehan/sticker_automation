@@ -5,7 +5,6 @@ from docx.enum.table import WD_TABLE_ALIGNMENT, WD_ALIGN_VERTICAL
 from docx.enum.section import WD_SECTION
 import yaml
 
-# ---------- helpers ----------
 def _mm(x): return Mm(float(x))
 
 def _set_section_size(section, page_w_mm, page_h_mm, margins):
@@ -28,27 +27,29 @@ def _para_align(s: str):
             "center": WD_ALIGN_PARAGRAPH.CENTER,
             "right": WD_ALIGN_PARAGRAPH.RIGHT}.get(s, WD_ALIGN_PARAGRAPH.LEFT)
 
-def _add_cell_border(cell, on: bool):
-    if not on: return
+def _clear_table_borders(table):
+    # Strip all table/cell borders via XML so there’s no rectangle
     from docx.oxml import OxmlElement
     from docx.oxml.ns import qn
-    tc = cell._tc
-    tcPr = tc.get_or_add_tcPr()
-    tcBorders = OxmlElement("w:tcBorders")
-    for edge in ("top", "left", "bottom", "right"):
-        tag = OxmlElement(f"w:{edge}")
-        tag.set(qn("w:val"), "single")
-        tag.set(qn("w:sz"), "8")  # ~1pt
-        tag.set(qn("w:space"), "0")
-        tag.set(qn("w:color"), "000000")
-        tcBorders.append(tag)
-    tcPr.append(tcBorders)
+    tbl = table._tbl
+    tblPr = tbl.tblPr
+    if tblPr is None:
+        tblPr = OxmlElement("w:tblPr")
+        tbl.insert(0, tblPr)
+    borders = tblPr.xpath("w:tblBorders")
+    if borders:
+        tblPr.remove(borders[0])
+    tblBorders = OxmlElement("w:tblBorders")
+    for side in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{side}")
+        el.set(qn("w:val"), "nil")
+        tblBorders.append(el)
+    tblPr.append(tblBorders)
 
-# ---------- renderer ----------
 def build_doc_flow(labels, config_path, out_docx):
     """
     Word: ONE STICKER PER PAGE (page size = label size).
-    For each label: new small page -> 1x1 table filling content area -> centered text.
+    No borders. Times New Roman. Line sizes/weights from YAML.
     """
     with open(config_path, "r", encoding="utf-8") as f:
         cfg = yaml.safe_load(f)
@@ -58,7 +59,6 @@ def build_doc_flow(labels, config_path, out_docx):
     text   = cfg["text"]
     lines  = cfg.get("lines", [])
     word_c = cfg.get("word", {"align": "center"})
-    show_border = bool(label.get("show_border", True))
 
     page_w = float(label["width_mm"])
     page_h = float(label["height_mm"])
@@ -85,8 +85,9 @@ def build_doc_flow(labels, config_path, out_docx):
             sec = doc.add_section(WD_SECTION.NEW_PAGE)
             _set_section_size(sec, page_w, page_h, margins)
 
-        # 1x1 table filling the content area
         table = doc.add_table(rows=1, cols=1)
+        table.style = None                      # no default grid
+        _clear_table_borders(table)             # force no borders
         table.alignment = table_alignment
         table.autofit = False
         try:
@@ -114,23 +115,21 @@ def build_doc_flow(labels, config_path, out_docx):
         p.paragraph_format.line_spacing = line_spacing
         p.alignment = para_alignment
 
-        # line1
-        l1cfg = lines[0] if len(lines) > 0 else {"show": True, "bold": False}
+        # line1 (bold 14)
+        l1cfg = lines[0] if len(lines) > 0 else {"show": True, "bold": True}
         if l1cfg.get("show", True):
-            add_line(p, lab.get("line1", ""), text.get("line1_size_pt", 10), l1cfg.get("bold", False))
+            add_line(p, lab.get("line1", ""), text.get("line1_size_pt", 14), l1cfg.get("bold", True))
 
         # line2..line4
         spec = [("line2","line2_size_pt"), ("line3","line3_size_pt"), ("line4","line4_size_pt")]
         for pos, (fname, fsize_key) in enumerate(spec, start=2):
-            cfg_line = lines[pos - 1] if len(lines) >= pos else {"show": True, "bold": False}
+            cfg_line = lines[pos - 1] if len(lines) >= pos else {"show": True, "bold": (pos == 4)}
             if cfg_line.get("show", True):
                 p2 = cell.add_paragraph()
                 p2.paragraph_format.space_before = Pt(0)
                 p2.paragraph_format.space_after  = Pt(0)
                 p2.paragraph_format.line_spacing = line_spacing
                 p2.alignment = para_alignment
-                add_line(p2, lab.get(fname, ""), text.get(fsize_key, 10), cfg_line.get("bold", False))
-
-        _add_cell_border(cell, show_border)
+                add_line(p2, lab.get(fname, ""), text.get(fsize_key, 12), cfg_line.get("bold", pos == 4))
 
     doc.save(out_docx)
