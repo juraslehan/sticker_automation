@@ -1,0 +1,139 @@
+[
+  {
+    "date": "20.10.2025.",
+    "location": "Avenija Dubrovnik 10",
+    "printer": "HP Color LaserJet Enterprise M751",
+    "product": "Komplet-",
+    "room": "107",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Avenija Dubrovnik 10",
+    "printer": " HP LaserJet Pro M402",
+    "product": " Crna-CF226A",
+    "room": "216",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Gradska uprava",
+    "printer": " HP LaserJet Pro 4002dn",
+    "product": "crna-W1490A",
+    "room": "449",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Gradska uprava",
+    "printer": "  HP LaserJet Pro 4002dn",
+    "product": "crna-W1490A",
+    "room": "Središnja pisarnica",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Gradska uprava",
+    "printer": "  HP LaserJet Pro M402",
+    "product": " Crna-CF226A",
+    "room": "334",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Črnomerec",
+    "printer": "HP Color LaserJet Pro M452dn",
+    "product": "komplet--",
+    "room": "63",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": " Područni ured Maksimir",
+    "printer": " HP LaserJet Pro M404",
+    "product": "black-CF259A",
+    "room": "Porta",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Medveščak",
+    "printer": " HP LaserJet Pro M402",
+    "product": "Crna-CF226A",
+    "room": "19",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Susedgrad",
+    "printer": " HP LaserJet PRO 400 M401",
+    "product": " 80A-CF280A",
+    "room": "217",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Trešnjevka",
+    "printer": "HP Color LaserJet Pro 4202",
+    "product": "komplet-",
+    "room": "417",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Trešnjevka",
+    "printer": "HP Color LaserJet Pro MFP M479fdn",
+    "product": " komplet-A415AVAL",
+    "room": "215",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Područni ured Trešnjevka",
+    "printer": " HP LaserJet Pro M404",
+    "product": "black-CF259A",
+    "room": "215",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Remetinec",
+    "printer": " HP LaserJet Pro M404",
+    "product": "black-CF259A",
+    "room": "14",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Velesajam",
+    "printer": " HP LaserJet Pro 4002dn",
+    "product": "crna-W1490A",
+    "room": "121",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Velesajam",
+    "printer": " HP LaserJet Pro 4002dn",
+    "product": "crna-W1490A",
+    "room": "201",
+    "qty": 1
+  },
+{
+    "date": "20.10.2025.",
+    "location": "Velesajam",
+    "printer": " HP LaserJet Pro 4002dn",
+    "product": "crna-W1490A",
+    "room": "503",
+    "qty": 1
+  },
+
+  {
+    "date": "20.10.2025.",
+    "location": "Vlaška",
+    "printer": " HP Color LaserJet Pro 4202",
+    "product": "komplet-",
+    "room": "21",
+    "qty": 1
+  }
+]

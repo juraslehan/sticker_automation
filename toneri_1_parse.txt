@@ -1,0 +1,67 @@
+[
+  {
+    "date": "21.10.2025.",
+    "location": "Avenija Dubrovnik 10",
+    "printer": " HP OfficeJet 7110",
+    "product": "komplet-",
+    "room": "124",
+    "qty": 1
+  },
+  {
+    "date": "21.10.2025.",
+    "location": "Branimirova",
+    "printer": " HP LaserJet Pro M402",
+    "product": " Crna-CF226A",
+    "room": "105",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Branimirova",
+    "printer": " HP LaserJet Pro M402",
+    "product": " Crna-CF226A",
+    "room": "105",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Gradska uprava",
+    "printer": " HP OfficeJet 7110",
+    "product": "komplet-",
+    "room": "166",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Marulićeva",
+    "printer": "HP LaserJet Pro M402",
+    "product": "Crna-CF226A",
+    "room": "307",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Područni ured Peščenica",
+    "printer": " HP LaserJet Pro M404",
+    "product": "black-CF259A",
+    "room": "401",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Područni ured Sesvete",
+    "printer": " HP LaserJet Pro M402",
+    "product": " Crna-CF226A",
+    "room": "23A",
+    "qty": 1
+  },
+{
+    "date": "21.10.2025.",
+    "location": "Velesajam",
+    "printer": " HP LaserJet Pro M404",
+    "product": " black-CF259A",
+    "room": "508",
+    "qty": 1
+  }
+
+]

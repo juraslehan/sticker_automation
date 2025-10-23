@@ -1,0 +1,16 @@
+[
+ {'line1': 'AVENIJA DUBROVNIK 10', 'line2': '21.10.2025.', 'line3': 'SOBA 124', 'line4': 'CN053AE'},
+ {'line1': 'AVENIJA DUBROVNIK 10', 'line2': '21.10.2025.', 'line3': 'SOBA 124', 'line4': 'CN054AE'},
+ {'line1': 'AVENIJA DUBROVNIK 10', 'line2': '21.10.2025.', 'line3': 'SOBA 124', 'line4': 'CN055AE'},
+ {'line1': 'AVENIJA DUBROVNIK 10', 'line2': '21.10.2025.', 'line3': 'SOBA 124', 'line4': 'CN056AE'},
+ {'line1': 'BRANIMIROVA', 'line2': '21.10.2025.', 'line3': 'SOBA 105', 'line4': 'CF226A'},
+ {'line1': 'BRANIMIROVA', 'line2': '21.10.2025.', 'line3': 'SOBA 105', 'line4': 'CF226A'},
+ {'line1': 'TSR', 'line2': '21.10.2025.', 'line3': 'SOBA 166', 'line4': 'CN053AE'},
+ {'line1': 'TSR', 'line2': '21.10.2025.', 'line3': 'SOBA 166', 'line4': 'CN054AE'},
+ {'line1': 'TSR', 'line2': '21.10.2025.', 'line3': 'SOBA 166', 'line4': 'CN055AE'},
+ {'line1': 'TSR', 'line2': '21.10.2025.', 'line3': 'SOBA 166', 'line4': 'CN056AE'},
+ {'line1': 'MARULIĆEVA', 'line2': '21.10.2025.', 'line3': 'SOBA 307', 'line4': 'CF226A'},
+ {'line1': 'PEŠČENICA', 'line2': '21.10.2025.', 'line3': 'SOBA 401', 'line4': 'CF259A'},
+ {'line1': 'SESVETE', 'line2': '21.10.2025.', 'line3': 'SOBA 23a', 'line4': 'CF226A'},
+ {'line1': 'VELESAJAM', 'line2': '21.10.2025.', 'line3': 'SOBA 508', 'line4': 'CF259A'}
+]

@@ -2,32 +2,37 @@ from __future__ import annotations
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 from .mappings import Normalizer
+import re
 
 def today_hr() -> str:
-    # "22.10.2025."
     return datetime.now().strftime("%d.%m.%Y.")
 
 def make_line3(room: Optional[str]) -> str:
     room = (room or "").strip()
-    return f"SOBA {room}" if room else "SOBA"
+    if not room:
+        return "SOBA"
+    low = room.lower()
+    # Središnja pisarnica → središnja pis.
+    if low.startswith("sredi"):
+        return "SOBA središnja pis."
+    # Porta → porta
+    if low == "porta":
+        return "SOBA porta"
+    # 23A → 23a  (digits + single letter)
+    m = re.match(r"^(\d+)([A-Za-z])$", room)
+    if m:
+        return f"SOBA {m.group(1)}{m.group(2).lower()}"
+    return f"SOBA {room}"
+
+
 
 def rows_to_labels(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
     """
     Convert parsed rows into 4-line label dicts.
-    Input row example:
-      {
-        "location": "Područni ured Trešnjevka",
-        "product": "komplet-CF400" | "black-CF259A" | "CF226A" | ...
-        "qty": 1,
-        "room": "215",
-        "printer": "HP Color LaserJet Pro M479fdn",
-        "komplet_family": "CF400"  # optional if product said it explicitly
-      }
-    Output: list of {"line1","line2","line3","line4"} (duplicated by qty).
+    Uses row['date'] from the PDF when available; falls back to today.
     """
     n = Normalizer()
     out: List[Dict[str, str]] = []
-    date_str = today_hr()
 
     for row in rows:
         loc_raw = (row.get("location") or "").strip()
@@ -35,6 +40,7 @@ def rows_to_labels(rows: List[Dict[str, Any]]) -> List[Dict[str, str]]:
         qty = int(row.get("qty") or 1)
         room = row.get("room")
         printer = (row.get("printer") or "").strip()
+        date_str = (row.get("date") or "").strip() or today_hr()
 
         # normalize location to short label (or keep uppercase)
         loc_short = n.normalize_location(loc_raw) or loc_raw.upper()
